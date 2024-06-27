@@ -26,10 +26,6 @@ class Apointment(models.Model):
     def __str__(self) -> str:
         return self.name
 
-
-
-
-
 class Package(models.Model):
     package_name = models.CharField(max_length=100)
     packimg=models.ImageField()
@@ -39,33 +35,27 @@ class Package(models.Model):
         return self.package_name
 
 
-# class MenuCategory(models.Model):
-#     category_name = models.CharField(max_length=100)
-#     category_description = models.TextField(blank=True, null=True)
-#     menu_categories = models.ManyToManyField('MenuCategory', through='PackageMenuCategory', related_name='packages')
+class MenuCategory(models.Model):
+    category_name = models.CharField(max_length=100)
+    category_description = models.TextField(blank=True, null=True)
+    menu_categories_pack = models.ForeignKey('Package', on_delete=models.CASCADE, related_name='category')
 
-#     def __str__(self):
-#         return self.category_name
-
-# class PackageMenuCategory(models.Model):
-#     package = models.ForeignKey(Package, on_delete=models.CASCADE)
-#     category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE)
-
- 
+    def __str__(self):
+        return self.category_name
 
 
-# class MenuItem(models.Model):
-#     item_id = models.AutoField(primary_key=True)
-#     item_name = models.CharField(max_length=100)
-#     item_description = models.TextField()
-#     item_image = models.ImageField(upload_to='menu_items', null=True, blank=True)
-#     category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE, related_name='menu_items')
-#     packages = models.ManyToManyField(Package, related_name='menu_items')
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
+class MenuItem(models.Model):
+    item_id = models.AutoField(primary_key=True)
+    item_name = models.CharField(max_length=100)
+    item_description = models.TextField()
+    item_image = models.ImageField(upload_to='menu_items', null=True, blank=True)
+    category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE, related_name='menu_items')
+    packages = models.ForeignKey('Package', on_delete=models.CASCADE, related_name='menuitemspack')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
-#     def __str__(self):
-#         return self.item_name
+    def __str__(self):
+        return self.item_name
 
 
 

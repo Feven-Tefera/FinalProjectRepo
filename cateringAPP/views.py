@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from .forms import *
 # Create your views here.
 
 def index(request):
@@ -60,3 +61,16 @@ def Appointemnt_view(request):
         obj.message=message
         obj.save()
    return render(request,'Appointmentdashboard.html',data)
+
+def package_view(request):
+    packageformitems = Package.objects.all()
+    package_form = PackageForm(request.POST or None, request.FILES or None)
+    if package_form.is_valid():
+        package_form.save()
+        return redirect('packages')
+
+    data = {
+        'form': package_form,
+        'packageformitems': packageformitems
+    }
+    return render(request, 'packagesdetailsall.html', data)
