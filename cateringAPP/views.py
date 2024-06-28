@@ -77,7 +77,9 @@ def package_view(request):
 
 def tables_view(request):
     packageformitems = Package.objects.all()
-    return render(request, 'tables.html', {'packageformitems': packageformitems})
+    categoryformitems = MenuCategory.objects.all()
+    menuformitems =MenuItem.objects.all()
+    return render(request, 'tables.html', {'packageformitems': packageformitems,'categoryformitems':categoryformitems, 'menuformitems':menuformitems})
 
 def package_edit_view(request, pk):
     package = get_object_or_404(Package, pk=pk)
@@ -96,3 +98,30 @@ def package_delete_view(request, pk):
         package.delete()
         return redirect('tables')
     return render(request, 'package_delete.html', {'package': package})
+
+def menu_cat_view(request):
+    categoryformitems = MenuCategory.objects.all()
+    category_form = Menucatform(request.POST or None, request.FILES or None)
+    if category_form.is_valid():
+        category_form.save()
+        return redirect('menucategory')
+    data = {
+        'category_form': category_form,
+        'categoryformitems': categoryformitems
+    }
+    return render(request, 'dashmenucategory.html', data)
+
+
+
+
+def menu_view(request):
+    menuformitems =MenuItem.objects.all()
+    menu_form =menuForm(request.POST or None, request.FILES or None)
+    if menu_form.is_valid():
+        menu_form.save()
+        return redirect('menus')
+    data={
+          'menu_form':menu_form,
+         'menuformitems':menuformitems
+    }
+    return render(request,'dashmenu.html',data)

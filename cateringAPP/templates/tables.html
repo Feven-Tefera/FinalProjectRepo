@@ -121,21 +121,118 @@
                       </table>
                     </div>
                   </div>
-
-           
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
+<hr>
+            <div class="container">
+              <div class="card">
+                <h5 class="card-header">Category Lists</h5>
+                <div class="card-body">
+                  <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Category Name</th>
+                          <th>Discription</th>
+                          <th>Package Type</th>
+                          <th>Status</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for categoryitem in categoryformitems %}
+                        <tr>
+                          <td>
+                            <strong>{{ categoryitem.category_name }}</strong>
+                          </td>
+                          <td>{{ categoryitem.category_description }}</td>
+                          <td>
+                            {{ categoryitem.menu_categories_pack }}
+                          </td>
+                          <td><span class="badge bg-label-primary me-1">Completed</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button
+                                type="button"
+                                class="btn p-0 dropdown-toggle hide-arrow"
+                                data-bs-toggle="dropdown"
+                              >
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"
+                                  ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                                >
+                                <a class="dropdown-item" href="javascript:void(0);"
+                                  ><i class="bx bx-trash me-1"></i> Delete</a
+                                >
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+<hr>
+            <div class="container">
+              <div class="card">
+                <h5 class="card-header">Menu Lists</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Food Name</th>
+                        <th>Ingerident</th>
+                        <th>Picture</th>
+                        <th>Category</th>
+                        <th>Package Type</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                      {% for mnus in menuformitems %}
+                      <tr>
+                        <td> <strong>{{mnus.item_name}}</strong></td>
+                        <td>{{mnus.item_description}}</td>
+                        <td>{{mnus.item_image}}</td>
+                        <td>{{mnus.category}}</td>
+                        <td>{{mnus.packages}}</td>
+                        <td><span class="badge bg-label-primary me-1">Active</span></td>
+                        <td>
+                          <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                              <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="javascript:void(0);"
+                                ><i class="bx bx-edit-alt me-1"></i> Edit</a
+                              >
+                              <a class="dropdown-item" href="javascript:void(0);"
+                                ><i class="bx bx-trash me-1"></i> Delete</a
+                              >
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                   {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
+
               </div>
             </div>
             <!-- / Content -->

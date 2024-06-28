@@ -10,5 +10,7 @@ urlpatterns = [
     path('tables',views.tables_view,name='tables'),
     path('package-edit/<int:pk>/', views.package_edit_view, name='package_edit_view'),
     path('package-delete/<int:pk>/', views.package_delete_view, name='package_delete_view'),
+    path('menucategory',views.menu_cat_view,name='menucategory'),
+    path('menus',views.menu_view,name='menus'),
 
 ]
