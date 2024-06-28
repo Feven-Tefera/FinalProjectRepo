@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import *
 from .forms import *
 # Create your views here.
@@ -74,3 +74,25 @@ def package_view(request):
         'packageformitems': packageformitems
     }
     return render(request, 'packagesdetailsall.html', data)
+
+def tables_view(request):
+    packageformitems = Package.objects.all()
+    return render(request, 'tables.html', {'packageformitems': packageformitems})
+
+def package_edit_view(request, pk):
+    package = get_object_or_404(Package, pk=pk)
+    if request.method == 'POST':
+        form = PackageForm(request.POST, request.FILES, instance=package)
+        if form.is_valid():
+            form.save()
+            return redirect('tables')
+    else:
+        form = PackageForm(instance=package)
+    return render(request, 'package_edit.html', {'form': form, 'package': package})
+
+def package_delete_view(request, pk):
+    package = get_object_or_404(Package, pk=pk)
+    if request.method == 'POST':
+        package.delete()
+        return redirect('tables')
+    return render(request, 'package_delete.html', {'package': package})
