@@ -1,12 +1,16 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.http import JsonResponse
 from .models import *
 from .forms import *
+from django.urls import reverse
 # Create your views here.
 
 def index(request):
    apointment_list = Apointment.objects.all()
+   packageformitems=Package.objects.all()
+  
    data ={
-        'apointment_list':apointment_list
+        'apointment_list':apointment_list, 'packageformitems':packageformitems
     }
    if request.method == "POST":
         name =request.POST.get('name')
@@ -28,11 +32,43 @@ def index(request):
         obj.save()
    
    return render(request,'index.html',data)
-def food(request):
-    data={
 
+
+def food(request):
+    categories = MenuCategory.objects.all()
+    menu_items = MenuItem.objects.all()
+
+    data = {
+        'categories': categories,
+        'menu_items': menu_items,
     }
-    return render(request,'foods.html',data)
+
+    return render(request, 'foods.html', data)
+
+
+
+
+# def get_menu_items(request, category_id):
+#     try:
+#         category = MenuCategory.objects.get(id=category_id)
+#         menu_items = MenuItem.objects.filter(category=category)
+#         menu_items_data = [
+#             {
+#                 'item_name': menu_item.item_name,
+#                 'item_description': menu_item.item_description,
+#                 'item_image': menu_item.item_image.url if menu_item.item_image else '',
+#                 'price': menu_item.packages.first().price,  # Assuming each MenuItem has at least one Package
+#             }
+#             for menu_item in menu_items
+#         ]
+#         return JsonResponse(menu_items_data, safe=False)
+#     except MenuCategory.DoesNotExist:
+#         return JsonResponse({'error': 'Category not found'}, status=404)
+
+
+
+
+
 def dashboard_view(reqest):
     data={}
     return render(reqest,'dashboard.html',data)
@@ -111,9 +147,6 @@ def menu_cat_view(request):
     }
     return render(request, 'dashmenucategory.html', data)
 
-
-
-
 def menu_view(request):
     menuformitems =MenuItem.objects.all()
     menu_form =menuForm(request.POST or None, request.FILES or None)
@@ -125,3 +158,9 @@ def menu_view(request):
          'menuformitems':menuformitems
     }
     return render(request,'dashmenu.html',data)
+
+
+
+
+
+

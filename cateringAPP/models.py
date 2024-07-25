@@ -1,6 +1,5 @@
 from django.db import models
-
-
+from django.conf import settings
 # customer model
 class Customer(models.Model):
     firstname=models.CharField(max_length=50)
@@ -56,6 +55,37 @@ class MenuItem(models.Model):
 
     def __str__(self):
         return self.item_name
+
+class Cart(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    menu_items = models.ManyToManyField(MenuItem, related_name='cart_items')
+    packages = models.ManyToManyField(Package, related_name='cart_packages')
+    categories = models.ManyToManyField(MenuCategory, related_name='cart_categories')
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Cart for {self.user}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

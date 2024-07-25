@@ -28,30 +28,8 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 
-<style>
-  .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #b8860b;
-}
-
-.nav-pills .nav-link {
-  color: #b8860b;
-}
-
-.form-check-input {
-  border-color: #d2b48c;
-  background-color: #d2b48c;
-}
-
-.form-check-input:checked {
-  background-color: #b8860b;
-  border-color: #b8860b;
-}
-
-</style>
 </head>
 
 <body>
@@ -111,93 +89,37 @@
             <p>Check Our Tasty Menu</p>
           </div>
   
-       
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-auto">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                  {% for category in categories %}
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link {% if forloop.first %}active{% endif %}" id="pills-{{ category.id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ category.id }}" type="button" role="tab" aria-controls="pills-{{ category.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
-                      {{ category.category_name }}
-                    </button>
-                  </li>
+          <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12 d-flex justify-content-center">
+              <ul id="menu-flters">
+                {% if not categoryformitems %}
+                  <li>No categories found.</li>
+                {% else %}
+                  {% for categoryitem in categoryformitems %}
+                    <li class="menu-category" data-category-id="{{ categoryitem.id }}">{{ categoryitem.category_name }}</li>
                   {% endfor %}
-                </ul>
-              </div>
+                {% endif %}
+              </ul>
             </div>
-          
-            <div class="tab-content" id="pills-tabContent">
-              {% for category in categories %}
-              <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-{{ category.id }}" role="tabpanel" aria-labelledby="pills-{{ category.id }}-tab">
-                  <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-                      <div class="col-12">
-                          <div class="form-check">
-                              <input class="form-check-input select-all" type="checkbox" value="" id="select-all-{{ category.id }}">
-                              <label class="form-check-label" for="select-all-{{ category.id }}">
-                                  Select All
-                              </label>
-                          </div>
-                      </div>
-                      {% for menu_item in category.menu_items.all %}
-                      <div class="col-lg-6 menu-item filter-{{ category.category_name|slugify }}">
-                          <div class="menu-content">
-                              <a href="#">{{ menu_item.item_name }}</a>
-                              <span>
-                                  <div class="form-check">
-                                      <input class="form-check-input menu-item-checkbox" type="checkbox" value="{{ menu_item.id }}" id="menu-item-{{ menu_item.id }}">
-                                  </div>
-                                  <!-- Cart Icon -->
-                                  <a href="#" class="add-to-cart" title="Add to Cart">
-                                      <i class="fas fa-shopping-cart"></i>
-                                  </a>
-                              </span>
-                          </div>
-                          <img src="{{ menu_item.item_image }}" class="menu-img" alt="">
-                          <div class="menu-ingredients">
-                              {{ menu_item.item_description }}
-                          </div>
-                      </div>
-                      {% endfor %}
-                  </div>
-              </div>
-              {% endfor %}
           </div>
-          
-         
-         
-         
-          </div>
-          
-          <script>
-            // Add event listeners for the "Select All" checkboxes
-            document.querySelectorAll('.select-all').forEach(checkbox => {
-              checkbox.addEventListener('change', (event) => {
-                const categoryId = event.target.id.split('-')[2];
-                const categoryCheckboxes = document.querySelectorAll(`#pills-${categoryId} .menu-item-checkbox`);
-                categoryCheckboxes.forEach(cb => {
-                  cb.checked = event.target.checked;
-                });
-              });
-            });
-          
-            // Add event listener for the menu item checkboxes
-            document.querySelectorAll('.menu-item-checkbox').forEach(checkbox => {
-              checkbox.addEventListener('change', (event) => {
-                const categoryId = event.target.closest('.tab-pane').id.split('-')[1];
-                const categoryCheckboxes = document.querySelectorAll(`#pills-${categoryId} .menu-item-checkbox`);
-                const selectAllCheckbox = document.getElementById(`select-all-${categoryId}`);
-                const allChecked = Array.from(categoryCheckboxes).every(cb => cb.checked);
-                selectAllCheckbox.checked = allChecked;
-              });
-            });
-          </script>
           
   
-        
-          
-          
-        
+          <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+           
+              <h3>{{ category.category_name }}</h3>
+              {% for menu_item in menu_items %}
+                <div class="col-lg-6 menu-item filter-{{ category.category_name|slugify }}">
+                  <img src="{{ menu_item.item_image }}" class="menu-img" alt="">
+                  <div class="menu-content">
+                    <a href="#">{{ menu_item.item_name }}</a><span></span>
+                  </div>
+                  <div class="menu-ingredients">
+                    {{ menu_item.item_description }}
+                  </div>
+                </div>
+              {% endfor %}
+            
+          </div>
           
           <!-- <script>
           

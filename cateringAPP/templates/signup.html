@@ -1,114 +1,147 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/logins/login-3/assets/css/login-3.css">
-<style>
-  
-    .container{
-        margin-left: 30px;
-    }
-</style>
-</head>
-<body>
-    <!-- Login 3 - Bootstrap Brain Component -->
-<section class="p-3 p-md-4 p-xl-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-6 bsb-tpl-bg-platinum">
-          <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
-            <h3 class="m-0">Welcome!</h3>
-            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="{% static 'assets/img/depositphotos_376824262-stock-illustration-online-registration-sign-concept-young.jpg' %}"   height="3000rem" alt="BootstrapBrain Logo">
-            <p class="mb-0">Already have an account  please login here<a href="{% url 'Account:Login' %}" class="link-secondary text-decoration-none">Login</a></p>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 bsb-tpl-bg-lotion">
-          <div class="p-3 p-md-4 p-xl-5">
-            <div class="row">
-              <div class="col-12">
-                <div class="mb-5">
-                  <h3>Sign Up</h3>
-                </div>
+<html
+  lang="en"
+  class="light-style customizer-hide"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="../assets/"
+  data-template="vertical-menu-template-free"
+>
+{% include 'includes/dashboardhead.html' %}
+
+
+  <body>
+    <!-- Content -->
+
+    <div class="container-xxl">
+      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="authentication-inner">
+          <!-- Register Card -->
+          <div class="card">
+            <div class="card-body">
+              <!-- Logo -->
+              <div class="app-brand justify-content-center">
+                <a href="index.html" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo">
+                    <svg
+                      width="25"
+                      viewBox="0 0 25 42"
+                      version="1.1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <defs>
+                        <path
+                          d="M13.7918663,0.358365126 L3.39788168,7.44174259 C0.566865006,9.69408886 -0.379795268,12.4788597 0.557900856,15.7960551 C0.68998853,16.2305145 1.09562888,17.7872135 3.12357076,19.2293357 C3.8146334,19.7207684 5.32369333,20.3834223 7.65075054,21.2172976 L7.59773219,21.2525164 L2.63468769,24.5493413 C0.445452254,26.3002124 0.0884951797,28.5083815 1.56381646,31.1738486 C2.83770406,32.8170431 5.20850219,33.2640127 7.09180128,32.5391577 C8.347334,32.0559211 11.4559176,30.0011079 16.4175519,26.3747182 C18.0338572,24.4997857 18.6973423,22.4544883 18.4080071,20.2388261 C17.963753,17.5346866 16.1776345,15.5799961 13.0496516,14.3747546 L10.9194936,13.4715819 L18.6192054,7.984237 L13.7918663,0.358365126 Z"
+                          id="path-1"
+                        ></path>
+                        <path
+                          d="M5.47320593,6.00457225 C4.05321814,8.216144 4.36334763,10.0722806 6.40359441,11.5729822 C8.61520715,12.571656 10.0999176,13.2171421 10.8577257,13.5094407 L15.5088241,14.433041 L18.6192054,7.984237 C15.5364148,3.11535317 13.9273018,0.573395879 13.7918663,0.358365126 C13.5790555,0.511491653 10.8061687,2.3935607 5.47320593,6.00457225 Z"
+                          id="path-3"
+                        ></path>
+                        <path
+                          d="M7.50063644,21.2294429 L12.3234468,23.3159332 C14.1688022,24.7579751 14.397098,26.4880487 13.008334,28.506154 C11.6195701,30.5242593 10.3099883,31.790241 9.07958868,32.3040991 C5.78142938,33.4346997 4.13234973,34 4.13234973,34 C4.13234973,34 2.75489982,33.0538207 2.37032616e-14,31.1614621 C-0.55822714,27.8186216 -0.55822714,26.0572515 -4.05231404e-15,25.8773518 C0.83734071,25.6075023 2.77988457,22.8248993 3.3049379,22.52991 C3.65497346,22.3332504 5.05353963,21.8997614 7.50063644,21.2294429 Z"
+                          id="path-4"
+                        ></path>
+                        <path
+                          d="M20.6,7.13333333 L25.6,13.8 C26.2627417,14.6836556 26.0836556,15.9372583 25.2,16.6 C24.8538077,16.8596443 24.4327404,17 24,17 L14,17 C12.8954305,17 12,16.1045695 12,15 C12,14.5672596 12.1403557,14.1461923 12.4,13.8 L17.4,7.13333333 C18.0627417,6.24967773 19.3163444,6.07059163 20.2,6.73333333 C20.3516113,6.84704183 20.4862915,6.981722 20.6,7.13333333 Z"
+                          id="path-5"
+                        ></path>
+                      </defs>
+                      <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
+                          <g id="Icon" transform="translate(27.000000, 15.000000)">
+                            <g id="Mask" transform="translate(0.000000, 8.000000)">
+                              <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                              </mask>
+                              <use fill="#696cff" xlink:href="#path-1"></use>
+                              <g id="Path-3" mask="url(#mask-2)">
+                                <use fill="#696cff" xlink:href="#path-3"></use>
+                                <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-3"></use>
+                              </g>
+                              <g id="Path-4" mask="url(#mask-2)">
+                                <use fill="#696cff" xlink:href="#path-4"></use>
+                                <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-4"></use>
+                              </g>
+                            </g>
+                            <g
+                              id="Triangle"
+                              transform="translate(19.000000, 11.000000) rotate(-300.000000) translate(-19.000000, -11.000000) "
+                            >
+                              <use fill="#696cff" xlink:href="#path-5"></use>
+                              <use fill-opacity="0.2" fill="#FFFFFF" xlink:href="#path-5"></use>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </svg>
+                  </span>
+                  <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                </a>
               </div>
-            </div>
-            <form action="#!">
-              <div class="row gy-3 gy-md-4 overflow-hidden">
-                <div class="col-12">
-                  <label for="Firstname" class="form-label">Firstname <span class="text-danger">*</span></label>
-                  <input type="name" class="form-control" name="name" id="name" placeholder="Firstname" required>
+              <!-- /Logo -->
+              <h4 class="mb-2">Adventure starts here 🚀</h4>
+              <p class="mb-4">Make your app management easy and fun!</p>
+
+              <form id="formAuthentication" class="mb-3" action="{% url 'Account:signup' %}" method="POST">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% for field in form %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    {{ field }}
                 </div>
-                <div class="col-12">
-                  <label for="Lastname" class="form-label">Lastname <span class="text-danger">*</span></label>
-                  <input type="name" class="form-control" name="name" id="name" placeholder="Lastname" required>
-                </div>
-                <div class="col-12">
-                  <label for="number" class="form-label">PhoneNo <span class="text-danger">*</span></label>
-                  <input type="number" class="form-control" name="number" id="number" placeholder="PhoneNo" required>
-                </div>
-                <div class="col-12">
-                  <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
-                </div>
-                <div class="col-12">
-                  <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                  <input type="password" class="form-control" name="password" id="password" value="" required>
-                </div>
-                <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" name="remember_me" id="remember_me">
-                    <label class="form-check-label text-secondary" for="remember_me">
-                      Keep me logged in
-                    </label>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="d-grid">
-                    <button class="btn bsb-btn-xl btn-primary" type="submit">Log in now</button>
-                  </div>
-                </div>
-              </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary d-grid w-100">Sign up</button>
             </form>
-            <div class="row">
-              <div class="col-12">
-                <hr class="mt-5 mb-4 border-secondary-subtle">
-                <div class="text-end">
-                  <a href="#!" class="link-secondary text-decoration-none">Forgot password</a>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <p class="mt-5 mb-4">Or sign in with</p>
-                <div class="d-flex gap-3 flex-column flex-xl-row">
-                  <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-                      <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
-                    </svg>
-                    <span class="ms-2 fs-6">Google</span>
-                  </a>
-                  <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                      <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
-                    </svg>
-                    <span class="ms-2 fs-6">Facebook</span>
-                  </a>
-                  <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-                      <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
-                    </svg>
-                    <span class="ms-2 fs-6">Twitter</span>
-                  </a>
-                </div>
-              </div>
+            
+
+              <p class="text-center">
+                <span>Already have an account?</span>
+                <a href="auth-login-basic.html">
+                  <span>Sign in instead</span>
+                </a>
+              </p>
             </div>
           </div>
+          <!-- Register Card -->
         </div>
       </div>
     </div>
-  </section>
-</body>
+
+    <!-- / Content -->
+
+  
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{% static 'assets/vendor/libs/jquery/jquery.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/popper/popper.js' %}"></script>
+    <script src="{% static 'assets/vendor/js/bootstrap.js' %}"></script>
+    <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+
+   
+    <script src="{% static 'assets/vendor/js/menu.js' %}"></script>
+      <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
 </html>
