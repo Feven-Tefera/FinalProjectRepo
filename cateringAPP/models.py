@@ -56,16 +56,32 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.item_name
 
+
 class Cart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
-    menu_items = models.ManyToManyField(MenuItem, related_name='cart_items')
-    packages = models.ManyToManyField(Package, related_name='cart_packages')
-    categories = models.ManyToManyField(MenuCategory, related_name='cart_categories')
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    # customer = models.ForeignKey(User, on_delete=models.CASCADE)  
+    dietary_restrictions = models.JSONField(default=list) 
+    preferred_contact_method = models.CharField(max_length=50)
+
+    menu_items = models.ManyToManyField(MenuItem)
+    packages = models.ManyToManyField(Package)
+    
+    delivery_fee = models.DecimalField(max_digits=10, decimal_places=2)
+    delivery_address = models.CharField(max_length=255)
+    delivery_time = models.DateTimeField()
+    
+    payment_method = models.CharField(max_length=50)
+    transaction_id = models.CharField(max_length=255)
+    
+    discounts = models.JSONField(default=list)  # Store as a list of discount objects
+    tax_rate = models.DecimalField(max_digits=5, decimal_places=2)
+    tax_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    final_price = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateTimeField()
 
     def __str__(self):
-        return f"Cart for {self.user}"
+        return f"Cart for {self.customer.username}"
 
 
 
@@ -85,6 +101,142 @@ class Cart(models.Model):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# class Cart(models.Model):
+#     packages = models.ManyToManyField(Package, related_name='cart_packages')
+#     categories = models.ManyToManyField(MenuCategory, related_name='cart_categories')
+#     menu_items = models.ManyToManyField(MenuItem, related_name='cart_items')
+   
 
 
 

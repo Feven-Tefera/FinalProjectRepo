@@ -50,6 +50,11 @@
   background-color: #b8860b;
   border-color: #b8860b;
 }
+.big-icon {
+    font-size: 2rem; 
+    color: white;
+    
+}
 
 </style>
 </head>
@@ -132,11 +137,16 @@
               <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-{{ category.id }}" role="tabpanel" aria-labelledby="pills-{{ category.id }}-tab">
                   <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
                       <div class="col-12">
-                          <div class="form-check">
-                              <input class="form-check-input select-all" type="checkbox" value="" id="select-all-{{ category.id }}">
-                              <label class="form-check-label" for="select-all-{{ category.id }}">
-                                  Select All
-                              </label>
+                          <div class="d-flex justify-content-between align-items-center">
+                              <div class="form-check">
+                                  <input class="form-check-input select-all" type="checkbox" value="" id="select-all-{{ category.id }}">
+                                  <label class="form-check-label" for="select-all-{{ category.id }}">
+                                      Select All
+                                  </label>
+                              </div>
+                              <a href="{% url 'cart' %}" class="add-selected-to-cart" title="Add Selected to Cart">
+                                <i class="fas fa-shopping-cart big-icon"></i>                              
+                              </a>
                           </div>
                       </div>
                       {% for menu_item in category.menu_items.all %}
@@ -145,12 +155,8 @@
                               <a href="#">{{ menu_item.item_name }}</a>
                               <span>
                                   <div class="form-check">
-                                      <input class="form-check-input menu-item-checkbox" type="checkbox" value="{{ menu_item.id }}" id="menu-item-{{ menu_item.id }}">
+                                      <input class="form-check-input menu-item-checkbox" type="checkbox" value="{{ menu_item.id }}" id="menu-item-{{ menu_item.id }}" data-name="{{ menu_item.item_name }}" data-price="{{ menu_item.price }}">
                                   </div>
-                                  <!-- Cart Icon -->
-                                  <a href="#" class="add-to-cart" title="Add to Cart">
-                                      <i class="fas fa-shopping-cart"></i>
-                                  </a>
                               </span>
                           </div>
                           <img src="{{ menu_item.item_image }}" class="menu-img" alt="">
@@ -163,6 +169,78 @@
               </div>
               {% endfor %}
           </div>
+          
+          <!-- <script>
+              let cart = {
+                  items: []
+              };
+          
+              function addToCart(item) {
+                  const existingItem = cart.items.find(i => i.id === item.id);
+                  
+                  if (existingItem) {
+                      existingItem.quantity += 1; // Increment quantity if item already exists
+                  } else {
+                      cart.items.push({ ...item, quantity: 1 }); // Add new item
+                  }
+                  console.log(cart); // For debugging purposes
+              }
+          
+              // Add event listener for "Add Selected to Cart" link
+              document.querySelectorAll('.add-selected-to-cart').forEach(link => {
+                  link.addEventListener('click', function(event) {
+                      event.preventDefault(); // Prevent default link behavior
+                      const selectedCheckboxes = document.querySelectorAll('.menu-item-checkbox:checked');
+          
+                      selectedCheckboxes.forEach(checkbox => {
+                          const menuItem = {
+                              id: checkbox.value,
+                              name: checkbox.getAttribute('data-name'),
+                              price: parseFloat(checkbox.getAttribute('data-price')) // Assuming price is stored as a data attribute
+                          };
+                          addToCart(menuItem);
+                          const cartIcon = checkbox.closest('.menu-item').querySelector('.add-to-cart i');
+                          cartIcon.classList.add('added-to-cart'); // Change color when added
+                      });
+          
+                      displayCart(); // Call function to update cart display
+                  });
+              });
+          
+              document.querySelectorAll('.menu-item-checkbox').forEach(checkbox => {
+                  checkbox.addEventListener('change', function() {
+                      const menuItem = {
+                          id: this.value,
+                          name: this.getAttribute('data-name'),
+                          price: parseFloat(this.getAttribute('data-price')) // Assuming price is stored as a data attribute
+                      };
+                      const cartIcon = this.closest('.menu-item').querySelector('.add-to-cart i');
+          
+                      if (this.checked) {
+                          addToCart(menuItem);
+                          cartIcon.classList.add('added-to-cart'); // Change color when added
+                      } else {
+                          // Remove item from cart if unchecked (optional)
+                          cart.items = cart.items.filter(i => i.id !== menuItem.id);
+                          cartIcon.classList.remove('added-to-cart'); // Reset color when removed
+                      }
+                      displayCart(); // Call function to update cart display
+                  });
+              });
+          
+              function displayCart() {
+                  // Implement display logic here
+                  console.log("Cart contents:", cart.items); // For debugging
+              }
+          </script>
+          
+          <style>
+              .added-to-cart {
+                  color: green; /* Change this to your desired color */
+              }
+          </style> -->
+          
+          
           
          
          
@@ -283,11 +361,11 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="footer-info">
-              <h3>Restaurantly</h3>
+              <h3>London Cafe and Satellite Restaurant</h3>
               <p>
-                A108 Adam Street <br>
-                NY 535022, USA<br><br>
-                <strong>Phone:</strong> +1 5589 55488 55<br>
+                Bole subcity <br>
+                <br><br>
+                <strong>Phone:</strong> +2519-06-23-25-65<br>
                 <strong>Email:</strong> info@example.com<br>
               </p>
               <div class="social-links mt-3">
@@ -303,9 +381,12 @@
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+              <li><a class="nav-link scrollto" href="#about">About</a></li>
+              <li><a class="nav-link scrollto" href="#specials">Packages</a></li>
+              <li><a class="nav-link scrollto" href="#events">Events</a></li>
+              <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
+              <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
             </ul>
@@ -347,7 +428,8 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
-  </footer><!-- End Footer -->
+  </footer>
+  <!-- End Footer -->
 
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

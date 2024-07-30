@@ -45,7 +45,9 @@ def food(request):
 
     return render(request, 'foods.html', data)
 
-
+def cart_view(request):
+    data={}
+    return render(request,'carts.html',data)
 
 
 # def get_menu_items(request, category_id):

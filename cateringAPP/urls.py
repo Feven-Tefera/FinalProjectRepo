@@ -13,5 +13,6 @@ urlpatterns = [
     path('package-delete/<int:pk>/', views.package_delete_view, name='package_delete_view'),
     path('menucategory',views.menu_cat_view,name='menucategory'),
     path('menus',views.menu_view,name='menus'),
+    path('cart',views.cart_view,name='cart'),
 
 ]
