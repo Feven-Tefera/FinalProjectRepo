@@ -1,0 +1,225 @@
+<!-- delete_profile.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delete Profile</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-control-placeholder {
+      position: absolute;
+      top: 50%;
+      left: 0.75rem;
+      transform: translateY(-50%);
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .form-control:focus + .form-control-placeholder,
+    .form-control:not(:placeholder-shown) + .form-control-placeholder {
+      top: 0rem;
+      left: 0.75rem;
+      font-size: 0.7rem;
+      opacity: 1;
+      transform: translateY(0%);
+    }
+
+    .form-control:placeholder-shown + .form-control-placeholder {
+      opacity: 0.7;
+    }
+
+    .text-sm {
+      font-size: 0.7rem;
+    }
+
+    .text-sm2 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .text-sm3 {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #cd7f32;
+    }
+
+    .custom-input:focus {
+      border-color: #007bff; /* Beautiful blue color for focus state */
+      box-shadow: 0 0 0 0.15rem rgba(0, 123, 255, 0.25); /* Adjust shadow color */
+    }
+
+    .custom-input:hover {
+      border-color: #007bff; /* Beautiful blue color for hover state */
+    }
+
+    .form-control-placeholder .required-asterisk {
+      color: red;
+      margin-left: 0.25rem;
+    }
+
+    .position-relative {
+      position: relative;
+    }
+
+    .position-absolute {
+      position: absolute;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .required-asterisk {
+      color: red;
+    }
+
+    .form-control-placeholder {
+      transform: translateY(-50%);
+      top: 50%;
+    }
+
+    .btn-outline-primary {
+      background: none;
+      border: hidden;
+      padding: 0;
+    }
+
+    .custom-btn {
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .custom-btn:hover {
+      box-shadow: none;
+    }
+
+    .alert {
+      transition: opacity 0.5s ease;
+      opacity: 1;
+    }
+
+    .alert.fade-out {
+      opacity: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header-text {
+      color: #cd7f32;
+      font-size: 18px;
+      margin: 0 0 20px 0;
+      padding: 2px 0 2px 0;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .text-orange {
+      color: #cd7f32;
+    }
+
+    .anton-regular {
+      font-size: 30px;
+      font-family: "Anton", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    #overlay {
+      position: fixed;
+      display: none;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+      cursor: mouse;
+    }
+
+    #layer-page {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 14px;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+    }
+  </style>
+  <body>
+    <div
+      id="overlay"
+      class="d-flex justify-content-center align-items-center min-vh-100"
+    >
+      <div class="card w-50 mx-auto mt-5">
+        <div class="card-header d-flex justify-content-center">
+          <div class="dropdown py-4">
+            <p class="anton-regular">Delete Profile</p>
+          </div>
+        </div>
+
+        <div class="card-body text-center">
+          <div class="text-center text-sm2">
+            <p>
+              Are you sure you want to delete your profile? This action cannot
+              be undone.
+            </p>
+          </div>
+          <form method="post">
+            {% csrf_token %}
+            <div class="container form-check mb-3 pb-3">
+              <label class="form-check-label text-sm3" for="confirm"
+                >I confirm that I want to delete my profile.</label
+              >
+              <input
+                type="checkbox"
+                class="form-check-input mx-1"
+                id="confirm"
+                name="confirm"
+              />
+              {% if form.confirm.errors %}
+              <div class="invalid-feedback d-block">
+                <p class="text-sm">
+                  please confirm checkbox inorder to procced
+                </p>
+              </div>
+              {% endif %}
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+              <button type="submit" class="btn btn-danger mx-1 text-sm2">
+                Delete Profile
+              </button>
+              <a
+                href="{% url 'Account:profile' %}"
+                class="btn btn-secondary mx-1 text-sm2"
+                >Cancel</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

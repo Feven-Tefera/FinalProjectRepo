@@ -1,0 +1,934 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Restaurantly Bootstrap Template - Index</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon" />
+    <link
+      href="{% static 'assets/img/apple-touch-icon.png' %}"
+      rel="apple-touch-icon"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="{% static 'assets/vendor/animate.css/animate.min.css' %}"
+      rel="stylesheet"
+    />
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet" />
+    <link
+      href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}"
+      rel="stylesheet"
+    />
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Custom Styling for Appointement Section */
+      .book-a-table .AF {
+        width: 100%;
+      }
+
+      .book-a-table .AF .form-group {
+        padding-bottom: 8px;
+      }
+
+      .book-a-table .AF .validate {
+        display: none;
+        color: red;
+        margin: 0 0 15px 0;
+        font-weight: 400;
+        font-size: 13px;
+      }
+
+      .book-a-table .AF .loading {
+        display: none;
+        text-align: center;
+        padding: 15px;
+      }
+
+      .book-a-table .AF .loading:before {
+        content: "";
+        display: inline-block;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        margin: 0 10px -6px 0;
+        border: 3px solid #cda45e;
+        border-top-color: #1a1814;
+        animation: animate-loading 1s linear infinite;
+      }
+
+      .book-a-table .AF input,
+      .book-a-table .AF textarea {
+        border-radius: 0;
+        box-shadow: none;
+        font-size: 14px;
+        background: #0c0b09;
+        border-color: #625b4b;
+        color: white;
+      }
+
+      .book-a-table .AF input::-moz-placeholder,
+      .book-a-table .AF textarea::-moz-placeholder {
+        color: #a49b89;
+      }
+
+      .book-a-table .AF input::placeholder,
+      .book-a-table .AF textarea::placeholder {
+        color: #a49b89;
+      }
+
+      .book-a-table .AF input:focus,
+      .book-a-table .AF textarea:focus {
+        border-color: #cda45e;
+      }
+
+      .book-a-table .AF input {
+        height: 44px;
+      }
+
+      .book-a-table .AF textarea {
+        padding: 10px 12px;
+      }
+
+      .book-a-table .AF button[type="submit"] {
+        background: #cda45e;
+        border: 0;
+        padding: 10px 35px;
+        color: #fff;
+        transition: 0.4s;
+        border-radius: 50px;
+      }
+
+      .book-a-table .AF button[type="submit"]:hover {
+        background: #d3af71;
+      }
+
+      .btn-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .nav-pills .nav-link.active,
+      .nav-pills .show > .nav-link {
+        color: #fff;
+        background-color: #b8860b;
+      }
+
+      .nav-pills .nav-link {
+        color: #b8860b;
+      }
+
+      /* Custom Styling for Texts */
+
+      .text-base {
+        font-weight: 600;
+        font-size: 0.94rem; /* 16px */
+        line-height: 1.5rem; /* 24px */
+      }
+
+      .text-sm {
+        font-size: 0.775rem; /* 14px */
+        line-height: 1.25rem; /* 20px */
+        font-weight: 400;
+      }
+
+      .text-md {
+        font-size: 0.85rem; /* 14px */
+        line-height: 1.25rem; /* 20px */
+        font-weight: 700;
+      }
+
+      .text-sm2 {
+        font-weight: 400;
+        font-size: 1rem; /* 16px */
+        line-height: 1.5rem; /* 24px */
+      }
+
+      .text-sm3 {
+        font-weight: bold;
+        font-size: 22px;
+        color: black;
+      }
+
+      .text-lg {
+        font-size: 0.9rem;
+        color: #efb261;
+      }
+
+      .text-32 {
+        font-size: 32px;
+      }
+
+      .header-text {
+        color: #cd7f32;
+        font-size: 18px;
+        margin: 0 0 20px 0;
+        padding: 2px 0 2px 0;
+        line-height: 1;
+        font-weight: 900;
+        text-transform: uppercase;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .text-orange {
+        color: #cd7f32;
+      }
+
+      .anton-regular {
+        font-size: 33px;
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      /* Custom Styling for Form Fields */
+
+      .form-control {
+        border: none;
+        background: #1a1814;
+      }
+
+      .form-control-placeholder {
+        position: absolute;
+        top: 50%;
+        left: 0.75rem;
+        transform: translateY(-50%);
+        transition: all 0.2s ease;
+        pointer-events: none;
+      }
+
+      .form-control-placeholder .required-asterisk {
+        color: red;
+        margin-left: 0.25rem;
+      }
+
+      .form-control:focus + .form-control-placeholder,
+      .form-control:not(:placeholder-shown) + .form-control-placeholder {
+        color: #cda45e;
+        top: 0rem;
+        left: 0.75rem;
+        font-size: 0.7rem;
+        opacity: 1;
+        transform: translateY(0%);
+      }
+
+      .form-control:placeholder-shown + .form-control-placeholder {
+        opacity: 0.7;
+      }
+
+      .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-check-input {
+        border-color: #d2b48c;
+        background-color: #d2b48c;
+      }
+
+      .form-check-input:checked {
+        background-color: #b8860b;
+        border-color: #b8860b;
+      }
+
+      .required-asterisk {
+        color: red;
+      }
+
+      .custom-input:focus {
+        background: black;
+        border-color: #cda45e;
+        box-shadow: 0 0 0 0.15rem rgba(205, 164, 94, 0.5); /* Adjust shadow color */
+      }
+
+      .custom-input:hover {
+        border-color: #cda45e;
+      }
+
+      .btn-outline-primary {
+        background: none;
+        border: hidden;
+        padding: 0;
+      }
+
+      .custom-btn {
+        font-size: 20px;
+        font-weight: bold;
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+
+      .custom-btn:hover {
+        box-shadow: none;
+        background: #cda45e;
+      }
+
+      /* Custom Styling for Positioning */
+
+      .position-relative {
+        position: relative;
+      }
+
+      .position-absolute {
+        position: absolute;
+      }
+
+      /* Custom Styling for Alert Prompts */
+
+      .alert {
+        transition: opacity 0.5s ease;
+        opacity: 1;
+      }
+
+      .alert.fade-out {
+        opacity: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* */
+      .rating-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .rating-stars {
+        font-size: 2rem;
+        /* Enlarge the star size */
+        position: relative;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: left;
+      }
+
+      .rating-stars input[type="radio"] {
+        display: none;
+      }
+
+      .rating-stars label {
+        display: inline-block;
+        cursor: pointer;
+        color: #cda45e;
+        transition: color 0.3s, transform 0.2s;
+      }
+
+      .rating-stars label:before {
+        content: "\2606";
+      }
+
+      .rating-stars input[type="radio"]:checked ~ label:before {
+        content: "\2605";
+        color: #cda45e;
+      }
+
+      .rating-stars label:hover,
+      .rating-stars label:hover ~ label {
+        color: #cda45e;
+        /* Change color on hover */
+        transform: scale(1.2);
+        /* Slightly enlarge on hover */
+      }
+
+      .rating-stars input[type="radio"]:checked ~ label:hover,
+      .rating-stars input[type="radio"]:checked ~ label:hover ~ label {
+        transform: scale(1.1);
+        /* Enlarge checked stars slightly on hover */
+      }
+
+      .rating-stars label:active {
+        transform: scale(1.3);
+        /* Enlarge stars when clicked */
+      }
+
+      .error-text {
+        font-size: 14px;
+      }
+
+      .package-text {
+        background: #1a1814;
+        border: none;
+        color: white;
+        font-size: 14px;
+      }
+
+      .review-input::placeholder {
+        border-color: #cda45e;
+        font-size: 14px;
+        color: #999;
+        font-style: italic;
+      }
+
+      .review-input:focus {
+        background: #1a1814;
+        border-color: #cda45e;
+        box-shadow: 0 0 0 0.15rem rgba(205, 164, 94, 0.5); /* Adjust shadow color */
+        color: white; /* Change this to your desired background color */
+      }
+
+      .form-select:focus {
+        border-color: #cda45e;
+        box-shadow: 0 0 0 0.15rem rgba(205, 164, 94, 0.5); /* Adjust shadow color */
+      }
+
+      .name-input::placeholder {
+        font-size: 14px;
+        color: #999;
+        font-style: normal;
+      }
+
+      .centered-content {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-header {
+        border-bottom: none;
+      }
+
+      .modal-body {
+        padding: 2rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ======= Top Bar ======= -->
+    <div id="topbar" class="d-flex align-items-center fixed-top">
+      <div
+        class="container d-flex justify-content-center justify-content-md-between"
+      >
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-phone d-flex align-items-center"
+            ><span>+1 5589 55488 55</span></i
+          >
+          <i class="bi bi-clock d-flex align-items-center ms-4"
+            ><span> Mon-Sat: 11AM - 23PM</span></i
+          >
+        </div>
+
+        <div class="languages d-none d-md-flex align-items-center">
+          <ul>
+            <li>En</li>
+            <li><a href="#">De</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top d-flex align-items-center">
+      <div
+        class="container-fluid container-xl d-flex align-items-center justify-content-lg-between"
+      >
+        {% comment %}
+        <a href="index.html" class="logo me-auto me-lg-0"
+          ><img src="assets/img/logo.png" alt="" class="img-fluid"
+        /></a>
+        {% endcomment %}
+
+        <h1 class="logo me-auto me-lg-0"><a href="index.html">LCSRAC </a></h1>
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+          <ul>
+            <li>
+              <a class="nav-link scrollto" href="{% url 'index_url' %}#hero"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a class="nav-link scrollto" href="{% url 'index_url' %}#about"
+                >About</a
+              >
+            </li>
+            <li>
+              <a class="nav-link scrollto" href="{% url 'index_url' %}#specials"
+                >Packages</a
+              >
+            </li>
+            <li>
+              <a class="nav-link scrollto" href="{% url 'index_url' %}#events"
+                >Events</a
+              >
+            </li>
+            <li>
+              <a class="nav-link scrollto" href="{% url 'index_url' %}#gallery"
+                >Gallery</a
+              >
+            </li>
+            <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <ul>
+            <li><a href="#">Drop Down 1</a></li>
+            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+              <ul>
+                <li><a href="#">Deep Drop Down 1</a></li>
+                <li><a href="#">Deep Drop Down 2</a></li>
+                <li><a href="#">Deep Drop Down 3</a></li>
+                <li><a href="#">Deep Drop Down 4</a></li>
+                <li><a href="#">Deep Drop Down 5</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Drop Down 2</a></li>
+            <li><a href="#">Drop Down 3</a></li>
+            <li><a href="#">Drop Down 4</a></li>
+          </ul>
+        </li> -->
+            <li>
+              <a class="nav-link scrollto" href="{% url 'index_url' %}#contact"
+                >Contact</a
+              >
+            </li>
+          </ul>
+
+          <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+
+        {% if user.is_authenticated %}
+
+        <a
+          href="#book-a-table"
+          class="book-a-table-btn scrollto d-none d-lg-flex"
+          >Book a table</a
+        >
+        {% else %}
+        <a href="#book-a-table" class="d-none book-a-table-btn scrollto"
+          >Book a table</a
+        >
+        <div></div>
+        {% endif %} {% if user.is_authenticated %}
+        <div class="dropdown d-none d-lg-block mx-4 mt-1">
+          <div
+            class="d-flex flex-column justify-content-center align-items-center"
+          >
+            <button
+              class="btn btn-dark text-sm border-1 border-secondary btn-circle position-relative"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fa-solid fa-user" style="font-size: 18px"></i>
+              <span
+                class="position-absolute bg-success border border-white rounded-circle"
+                style="bottom: 0; right: 0; width: 10px; height: 10px"
+              ></span>
+            </button>
+
+            {% for customer in profileIcon %} {% if customer.user == user %}
+            <li class="dropdown-item text-sm text-center text-white pt-1">
+              <b>{{customer.firstname}}</b>
+              <b>{{customer.lastname}}</b>
+            </li>
+            {% endif %} {% endfor %}
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              aria-labelledby="dropdownMenuButton2"
+            >
+              {% for customer in profileIcon %} {% if customer.user == user %}
+              <li class="dropdown-item text-sm">
+                <b>{{customer.email}}</b>
+              </li>
+              {% endif %} {% endfor %}
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item text-sm" href="{% url 'Account:profile' %}"
+                  ><b>Profile</b></a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a
+                  class="dropdown-item text-lg text-light"
+                  href="{% url 'Account:signout' %}"
+                  onclick="return confirmLogout()"
+                  >Log out
+                  <i
+                    class="bi bi-box-arrow-right text-danger p-lg-2"
+                    style="font-size: 15px"
+                  ></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+          {% else %}
+          <!-- .navbar -->
+        </div>
+
+        <div class="d-none d-md-flex align-items-center text-sm mx-4">
+          <a href="{% url 'Account:signup' %}" class="px-1"><b>Sign Up</b></a>
+          /
+          <a href="{% url 'Account:signin' %}" class="px-1"><b>Sign In</b></a>
+        </div>
+      </div>
+      {% endif %}
+    </header>
+    <!-- End Header -->
+
+
+<section id="menu" class="menu section-bg">
+  <div class="mt-5 py-5">
+    <div class="d-flex justify-content-center align-content-center">
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} p-1 w-25"
+      >
+        <span class="text-sm text-success">{{ message }}</span>
+        <br />
+      </div>
+      {% endfor %} {% endif %}
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-lg-6 mt-5">
+          <div class="d-flex flex-row py-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              fill="currentColor"
+              class="bi bi-person"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"
+              />
+            </svg>
+            {% if customer.user == user %}
+            <p
+              class="justify-content-center align-content-center mx-3 anton-regular"
+              style="color: #cda45e"
+            >
+              {{customer.firstname}} {{customer.lastname}}
+            </p>
+            {% endif %}
+          </div>
+          <div class="d-flex flex-wrap justify-content-between gap-3 p-4 px-0">
+            <p class="fw-bold fs-4">Manage your Account</p>
+          </div>
+          <form method="post">
+            {% csrf_token %} {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {% for error in form.non_field_errors %}
+              <p class="text-sm">{{ error }}</p>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group position-relative">
+              <input
+                type="email"
+                name="email"
+                class="form-control text-white py-3 custom-input {% if form.email.errors %} is-invalid{% endif %}"
+                id="{{ form.email.id_for_label }}"
+                placeholder=" "
+                value="{{ form.email.value|default_if_none:'' }}"
+                required
+                style="background: #1a1814"
+              />
+              <label
+                for="{{ form.email.id_for_label }}"
+                class="form-control-placeholder text-sm"
+              >
+                Email<span class="required-asterisk">*</span>
+              </label>
+              {% for error in form.email.errors %}
+              <div class="invalid-feedback text-sm2">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <div class="form-group position-relative">
+              <input
+                type="password"
+                name="new_password"
+                class="form-control text-white py-3 custom-input {% if form.new_password.errors %} is-invalid{% endif %}"
+                id="{{ form.new_password.id_for_label }}"
+                placeholder=" "
+                style="font-size: 14px; background: #1a1814"
+              />
+              <label
+                for="{{ form.new_password.id_for_label }}"
+                class="form-control-placeholder text-sm"
+              >
+                New Password<span class="required-asterisk">*</span>
+              </label>
+              <button
+                type="button"
+                class="btn btn-outline-none text-white-50 textw btn-sm position-absolute"
+                id="toggleNewPassword"
+                style="right: 10px; top: 50%; transform: translateY(-50%)"
+              >
+                <i class="fas fa-eye-slash"></i>
+              </button>
+              {% if form.new_password.errors %}
+              <div class="alert alert-danger">
+                {{ form.new_password.errors }}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="form-group position-relative">
+              <input
+                type="password"
+                name="confirm_password"
+                class="form-control py-3 text-white custom-input {% if form.confirm_password.errors %} is-invalid{% endif %}"
+                id="{{ form.confirm_password.id_for_label }}"
+                placeholder=" "
+                style="font-size: 14px; background: #1a1814"
+              />
+              <label
+                for="{{ form.confirm_password.id_for_label }}"
+                class="form-control-placeholder text-sm"
+              >
+                Confirm Password<span class="required-asterisk">*</span>
+              </label>
+              <button
+                type="button"
+                class="btn btn-outline-none text-white-50 btn-sm position-absolute"
+                id="toggleConfirmPassword"
+                style="right: 10px; top: 50%; transform: translateY(-50%)"
+              >
+                <i class="fas fa-eye-slash"></i>
+              </button>
+              {% if form.confirm_password.errors %}
+              <div class="alert alert-danger">
+                {{ form.confirm_password.errors }}
+              </div>
+              {% endif %}
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-dark py-3 w-100 btn-block custom-btn"
+            >
+              <p class="my-auto">Update</p>
+            </button>
+
+            <div class="d-flex justify-content-center my-3 px-1">
+              <a
+                href="{% url 'Account:delete_profile' %}"
+                class="text-lg text-danger text-decoration-none"
+                ><b>Delete Account</b></a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <h3>Restaurantly</h3>
+              <p>
+                A108 Adam Street <br />
+                NY 535022, USA<br /><br />
+                <strong>Phone:</strong> +1 5589 55488 55<br />
+                <strong>Email:</strong> info@example.com<br />
+              </p>
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"
+                  ><i class="bx bxl-facebook"></i
+                ></a>
+                <a href="#" class="instagram"
+                  ><i class="bx bxl-instagram"></i
+                ></a>
+                <a href="#" class="google-plus"
+                  ><i class="bx bxl-skype"></i
+                ></a>
+                <a href="#" class="linkedin"
+                  ><i class="bx bxl-linkedin"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li>
+                <i class="bx bx-chevron-right"></i> <a href="#">Home</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i> <a href="#">About us</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i> <a href="#">Services</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i>
+                <a href="#">Terms of service</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i>
+                <a href="#">Privacy policy</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li>
+                <i class="bx bx-chevron-right"></i> <a href="#">Web Design</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i>
+                <a href="#">Web Development</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i>
+                <a href="#">Product Management</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i> <a href="#">Marketing</a>
+              </li>
+              <li>
+                <i class="bx bx-chevron-right"></i>
+                <a href="#">Graphic Design</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>
+              Tamen quem nulla quae legam multos aute sint culpa legam noster
+              magna
+            </p>
+            <form action="" method="post">
+              <input type="email" name="email" /><input
+                type="submit"
+                value="Subscribe"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Restaurantly</span></strong
+        >. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer -->
+  <script>
+    document
+      .getElementById("toggleNewPassword")
+      .addEventListener("click", function () {
+        var newPasswordInput = document.getElementById(
+          "{{ form.new_password.id_for_label }}"
+        );
+        var newPasswordIcon = this.querySelector("i");
+        if (newPasswordInput.type === "password") {
+          newPasswordInput.type = "text";
+          newPasswordIcon.classList.remove("fa-eye-slash");
+          newPasswordIcon.classList.add("fa-eye");
+        } else {
+          newPasswordInput.type = "password";
+          newPasswordIcon.classList.remove("fa-eye");
+          newPasswordIcon.classList.add("fa-eye-slash");
+        }
+      });
+
+    document
+      .getElementById("toggleConfirmPassword")
+      .addEventListener("click", function () {
+        var confirmPasswordInput = document.getElementById(
+          "{{ form.confirm_password.id_for_label }}"
+        );
+        var confirmPasswordIcon = this.querySelector("i");
+        if (confirmPasswordInput.type === "password") {
+          confirmPasswordInput.type = "text";
+          confirmPasswordIcon.classList.remove("fa-eye-slash");
+          confirmPasswordIcon.classList.add("fa-eye");
+        } else {
+          confirmPasswordInput.type = "password";
+          confirmPasswordIcon.classList.remove("fa-eye");
+          confirmPasswordIcon.classList.add("fa-eye-slash");
+        }
+      });
+  </script>
+
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>

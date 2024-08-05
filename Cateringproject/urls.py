@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('cateringAPP.urls')),
     path('Account/', include('Account.urls', namespace='Account')),
+    path('Orders/', include('Orders.urls', namespace='Orders')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

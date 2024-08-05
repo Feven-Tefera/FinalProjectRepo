@@ -6,33 +6,34 @@ from django.urls import reverse
 # Create your views here.
 
 def index(request):
-   apointment_list = Apointment.objects.all()
-   packageformitems=Package.objects.all()
-  
-   data ={
-        'apointment_list':apointment_list, 'packageformitems':packageformitems
+    profileIcon = Customer.objects.all()
+    appointment_list = Apointment.objects.all()
+    packageformitems = Package.objects.all()
+    data = {
+        "appointment_list": appointment_list,
+        "packageformitems": packageformitems,
+        "profileIcon": profileIcon,
     }
-   if request.method == "POST":
-        name =request.POST.get('name')
-        email =request.POST.get('email')
-        phone =request.POST.get('phone')
-        date =request.POST.get('date')
-        time=request.POST.get('time')
-        people=request.POST.get('people')
-        message=request.POST.get('message')
-      
-        obj=Apointment()
-        obj.name=name
-        obj.email=email
-        obj.phone=phone
-        obj.date=date
-        obj.time=time
-        obj.people=people
-        obj.message=message
-        obj.save()
-   
-   return render(request,'index.html',data)
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        date = request.POST.get("date")
+        time = request.POST.get("time")
+        people = request.POST.get("people")
+        message = request.POST.get("message")
 
+        obj = Apointment()
+        obj.name = name
+        obj.email = email
+        obj.phone = phone
+        obj.date = date
+        obj.time = time
+        obj.people = people
+        obj.message = message
+        obj.save()
+
+    return render(request, "index.html", data)
 
 def food(request):
     categories = MenuCategory.objects.all()
@@ -45,9 +46,7 @@ def food(request):
 
     return render(request, 'foods.html', data)
 
-def cart_view(request):
-    data={}
-    return render(request,'carts.html',data)
+
 
 
 # def get_menu_items(request, category_id):

@@ -1,6 +1,6 @@
-from django.urls import path
+from django.contrib import admin
+from django.urls import path, include
 from . import views
-
 
 urlpatterns = [
     path('', views.index, name='index_url' ),
@@ -13,6 +13,5 @@ urlpatterns = [
     path('package-delete/<int:pk>/', views.package_delete_view, name='package_delete_view'),
     path('menucategory',views.menu_cat_view,name='menucategory'),
     path('menus',views.menu_view,name='menus'),
-    path('cart',views.cart_view,name='cart'),
 
 ]
