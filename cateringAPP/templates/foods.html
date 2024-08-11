@@ -88,12 +88,12 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto" href="{% url 'index_url' %}#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'index_url' %}#about">About</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'index_url' %}#specials">Packages</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'index_url' %}#events">Events</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'index_url' %}#gallery">Gallery</a></li>
-          <li><a class="nav-link scrollto" href="{% url 'index_url' %}#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#specials">Packages</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#events">Events</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#gallery">Gallery</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -115,90 +115,89 @@
             <h2>Menu</h2>
             <p>Check Our Tasty Menu</p>
           </div>
-  
-       
+
+
           <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-auto">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                  {% for category in categories %}
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link {% if forloop.first %}active{% endif %}" id="pills-{{ category.id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ category.id }}" type="button" role="tab" aria-controls="pills-{{ category.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
-                      {{ category.category_name }}
-                    </button>
-                  </li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-          
-            <div class="tab-content" id="pills-tabContent">
-              {% for category in categories %}
-              <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-{{ category.id }}" role="tabpanel" aria-labelledby="pills-{{ category.id }}-tab">
-                  <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-                      <div class="col-12">
-                          <div class="d-flex justify-content-between align-items-center">
-                              <div class="form-check">
-                                  <input class="form-check-input select-all" type="checkbox" value="" id="select-all-{{ category.id }}">
-                                  <label class="form-check-label" for="select-all-{{ category.id }}">
-                                      Select All
-                                  </label>
-                              </div>
-                              <a href="">
-                                  <i class="fas fa-shopping-cart big-icon"></i>                              
-                              </a>
-                          </div>
-                      </div>
-                      {% for menu_item in category.menu_items.all %}
-                      <div class="col-lg-6 menu-item filter-{{ category.category_name|slugify }}">
-                          <div class="menu-content">
-                              <a href="#">{{ menu_item.item_name }}</a>
-                              <span>
-                                  <div class="form-check">
-                                      <input class="form-check-input menu-item-checkbox" type="checkbox" value="{{ menu_item.id }}" id="menu-item-{{ menu_item.id }}" data-name="{{ menu_item.item_name }}" data-price="{{ menu_item.price }}">
-                                  </div>
-                              </span>
-                          </div>
-                          <img src="{{ menu_item.item_image }}" class="menu-img" alt="">
-                          <div class="menu-ingredients">
-                              {{ menu_item.item_description }}
-                          </div>
-                      </div>
-                      {% endfor %}
-                  </div>
-              </div>
-              {% endfor %}
-          </div>
-          
-     
-          
-          
- 
-          </div>
-          
-          <script>
+            <form id="add-to-cart-form" method="POST" action="{% url 'Orders:add_to_cart' %}">
+                {% csrf_token %}
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            {% for category in categories %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link {% if forloop.first %}active{% endif %}" id="pills-{{ category.id }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ category.id }}" type="button" role="tab" aria-controls="pills-{{ category.id }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                                    {{ category.category_name }}
+                                </button>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+        
+                <div class="tab-content" id="pills-tabContent">
+                    {% for category in categories %}
+                    <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pills-{{ category.id }}" role="tabpanel" aria-labelledby="pills-{{ category.id }}-tab">
+                        <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input select-all" type="checkbox" value="" id="select-all-{{ category.id }}">
+                                        <label class="form-check-label" for="select-all-{{ category.id }}">
+                                            Select All
+                                        </label>
+                                    </div>
+                                    <a href="{% url 'Orders:cart_view' %}">
+                                        <i class="fas fa-shopping-cart big-icon"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            {% for menu_item in category.menu_items.all %}
+                            <div class="col-lg-6 menu-item filter-{{ category.category_name|slugify }}">
+                                <div class="menu-content">
+                                    <a href="#">{{ menu_item.item_name }}</a>
+                                    <span>
+                                        <div class="form-check">
+                                            <input class="form-check-input menu-item-checkbox" type="checkbox" name="menu_items" value="{{ menu_item.item_id }}" id="menu-item-{{ menu_item.item_id }}">  <!-- Use item_id -->
+                                        </div>
+                                    </span>
+                                </div>
+                                <img src="{{ menu_item.item_image }}" class="menu-img" alt="">
+                                <div class="menu-ingredients">
+                                    {{ menu_item.item_description }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+        
+                <button type="submit" class="btn btn-primary mt-3">Add to Cart</button>
+            </form>
+        </div>
+        
+        <script>
             // Add event listeners for the "Select All" checkboxes
             document.querySelectorAll('.select-all').forEach(checkbox => {
-              checkbox.addEventListener('change', (event) => {
-                const categoryId = event.target.id.split('-')[2];
-                const categoryCheckboxes = document.querySelectorAll(`#pills-${categoryId} .menu-item-checkbox`);
-                categoryCheckboxes.forEach(cb => {
-                  cb.checked = event.target.checked;
+                checkbox.addEventListener('change', (event) => {
+                    const categoryId = event.target.id.split('-')[2];
+                    const categoryCheckboxes = document.querySelectorAll(`#pills-${categoryId} .menu-item-checkbox`);
+                    categoryCheckboxes.forEach(cb => {
+                        cb.checked = event.target.checked;
+                    });
                 });
-              });
             });
-          
-            // Add event listener for the menu item checkboxes
-            document.querySelectorAll('.menu-item-checkbox').forEach(checkbox => {
-              checkbox.addEventListener('change', (event) => {
-                const categoryId = event.target.closest('.tab-pane').id.split('-')[1];
-                const categoryCheckboxes = document.querySelectorAll(`#pills-${categoryId} .menu-item-checkbox`);
-                const selectAllCheckbox = document.getElementById(`select-all-${categoryId}`);
-                const allChecked = Array.from(categoryCheckboxes).every(cb => cb.checked);
-                selectAllCheckbox.checked = allChecked;
-              });
+        
+            // Form submission validation
+            document.getElementById('add-to-cart-form').addEventListener('submit', function(event) {
+                const checkboxes = document.querySelectorAll('input[name="menu_items"]:checked');
+                if (checkboxes.length === 0) {
+                    event.preventDefault(); // Prevent form submission
+                    alert('Please select at least one menu item.');
+                }
             });
-          </script>
+        </script>
+        
           
   
         

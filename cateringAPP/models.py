@@ -12,8 +12,8 @@ class Customer(models.Model):
     subcity = models.CharField(max_length=80)
     phonenum = models.CharField(max_length=20)
 
-    def str(self) -> str:
-        return f"{self.firstname} {self.lastname}"
+    def __str__(self) -> str:
+     return f"{self.firstname} {self.lastname}"
 
     class Meta:
         verbose_name = "Customer"

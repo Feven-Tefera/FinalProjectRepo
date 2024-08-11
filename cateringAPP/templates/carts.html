@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_filters %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,6 +21,76 @@
             margin-top: 20px;
             background: #0c0b09;
         }
+        
+    .card {
+        margin-bottom: 24px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+    }
+
+    .customer-info {
+        background-color: #e9ecef; /* Light grey background */
+        border-radius: 0.5rem;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .customer-info h6 {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .info-item {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f2f2f2; /* Zebra striping */
+    }
+
+    .table th {
+        background-color: #007bff; /* Bootstrap primary color */
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #28a745; /* Bootstrap success color */
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Bootstrap danger color */
+        border: none;
+    }
+
+    .font-size-14 {
+        font-size: 1rem;
+    }
+
+    .font-size-16 {
+        font-size: 1.25rem;
+    }
+
+    .d-flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .text-end {
+        text-align: right;
+    }
 
         .card {
             margin-bottom: 24px;
@@ -416,19 +488,30 @@
                     <div class="card-body">
                         <h5 class="font-size-16 mb-4">Your Cart</h5>
                         <div class="customer-info mb-4">
-                            <h6>Customer Information</h6>
-                            <p><strong>First Name:</strong> {{ customer.firstname }}</p>
-                            <p><strong>Last Name:</strong> {{ customer.lastname }}</p>
-                            <p><strong>Email:</strong> {{ customer.email }}</p>
-                            <p><strong>City:</strong> {{ customer.city }}</p>
-                            <p><strong>Subcity:</strong> {{ customer.subcity }}</p>
-                            <p><strong>Phone Number:</strong> {{ customer.phonenum }}</p>
+                            <h6 class="font-weight-bold">Customer Information</h6>
+                            <div class="info-item">
+                                <strong>First Name:</strong> <span>{{ customer.firstname }}</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Last Name:</strong> <span>{{ customer.lastname }}</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Email:</strong> <span>{{ customer.email }}</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>City:</strong> <span>{{ customer.city }}</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Subcity:</strong> <span>{{ customer.subcity }}</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Phone Number:</strong> <span>{{ customer.phonenum }}</span>
+                            </div>
                         </div>
                         <div class="table-responsive">
-                            <table>
+                            <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
                                         <th>Item Name</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
@@ -436,59 +519,78 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <!-- <tbody id="cart-items">
-                                    {% for cart_item in cart_items %}
+                                <tbody id="cart-items">
+                                    {% if cart_items %}
+                                        {% for item in cart_items %}
+                                            <tr>
+                                                <td>
+                                                    {% if item.package %}
+                                                        {{ item.package.package_name }}
+                                                    {% elif item.menu_item %}
+                                                        {{ item.menu_item.item_name }}
+                                                    {% else %}
+                                                        N/A
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>
+                                                    {% if item.package %}
+                                                        ${{ item.package.package_price }}
+                                                    {% elif item.menu_item %}
+                                                        ${{ item.menu_item.price }}
+                                                    {% else %}
+                                                        $0.00
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if item.package %}
+                                                        ${{ item.package.package_price|multiply:item.quantity }}
+                                                    {% elif item.menu_item %}
+                                                        ${{ item.menu_item.price|multiply:item.quantity }}
+                                                    {% else %}
+                                                        $0.00
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="btn btn-danger btn-sm">Remove</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
                                         <tr>
-                                            <td><img src="{{ cart_item.menu_item.image_url }}" alt="{{ cart_item.menu_item.name }}" class="avatar-lg rounded"></td>
-                                            <td>{{ cart_item.menu_item.name }}</td>
-                                            <td>
-                                                <input type="number" min="1" value="{{ cart_item.quantity }}" onchange="updateQuantity({ cart_item.id }, this.value)">
-                                            </td>
-                                            <td>${{ cart_item.menu_item.price }}</td>
-                                            <td>${{ cart_item.total_price }}</td>
-                                            <td><button onclick="removeFromCart({cart_item.id })">Remove</button></td>
+                                            <td colspan="5" class="text-center">Your cart is empty.</td>
                                         </tr>
-                                    {% empty %}
-                                        <tr>
-                                            <td colspan="6">Your cart is empty.</td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody> -->
-                                
-                                <!-- <tfoot>
+                                    {% endif %}
+                                </tbody>
+                                <tfoot>
                                     <tr>
-                                        <td colspan="4">Total:</td>
-                                        <td>${{ cart_items|sum }}</td> 
-                                        <td></td>
+                                        <td colspan="3"></td>
+                                        <td><strong>Subtotal:</strong></td>
+                                        <td id="subtotal">${{ total_price }}</td>
                                     </tr>
-                                </tfoot> -->
+                                </tfoot>
                             </table>
-                            
                         </div>
                         <div class="mt-4">
                             <h5 class="font-size-14">Order Summary</h5>
                             <div class="d-flex justify-content-between">
-                                <span>Subtotal:</span>
-                                <span id="subtotal">${{ cart_items|sum:"total_price" }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
                                 <span>Shipping:</span>
-                                <span id="shipping">$25.00</span>  <!-- Example fixed shipping cost -->
+                                <span id="shipping">${{ shipping_cost }}</span>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <span>Tax:</span>
-                                <span id="tax">${{ cart_items|sum:"tax" }}</span>  <!-- Calculate tax as needed -->
+                                <span id="tax">${{ tax }}</span>
                             </div>
                             <div class="d-flex justify-content-between font-weight-bold">
                                 <span>Total:</span>
-                                <span id="total">${{ cart_items|sum:"total_price" }} + $25.00 + {{ cart_items|sum:"tax" }}</span> <!-- Calculate total -->
+                                <span id="total">${{ total_cost }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row my-4">
                     <div class="col">
-                        <a href="ecommerce-products.html" class="btn btn-link text-muted">
+                        <a href="{% url 'cateringAPP:food' %}" class="btn btn-link text-muted">
                             <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping
                         </a>
                     </div>
@@ -505,25 +607,72 @@
                         <h5 class="font-size-16 mb-0">Order Summary</h5>
                         <div class="table-responsive">
                             <table class="table table-centered mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td>Subtotal:</td>
-                                        <td id="summary-subtotal">${{ cart_items|sum:"total_price" }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shipping:</td>
-                                        <td id="summary-shipping">$25.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tax:</td>
-                                        <td id="summary-tax">${{ cart_items|sum:"tax" }}</td>
-                                    </tr>
-                                    <tr class="bg-light">
-                                        <td>Total:</td>
-                                        <td id="summary-total">${{ cart_items|sum:"total_price" }} + $25.00 + {{ cart_items|sum:"tax" }}</td>
-                                    </tr>
+                                <tbody id="cart-items">
+                                    {% if cart_items %}
+                                        {% for item in cart_items %}
+                                            <tr>
+                                                <td>
+                                                    {% if item.package %}
+                                                        {{ item.package.package_name }}
+                                                    {% elif item.menu_item %}
+                                                        {{ item.menu_item.item_name }}
+                                                    {% else %}
+                                                        N/A
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>
+                                                    {% if item.package %}
+                                                        ${{ item.package.package_price }}
+                                                    {% elif item.menu_item %}
+                                                        ${{ item.menu_item.price }}
+                                                    {% else %}
+                                                        $0.00
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if item.package %}
+                                                        ${{ item.package.package_price|multiply:item.quantity }}
+                                                    {% elif item.menu_item %}
+                                                        ${{ item.menu_item.price|multiply:item.quantity }}
+                                                    {% else %}
+                                                        $0.00
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <a href="#" class="btn btn-danger btn-sm">Remove</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="5" class="text-center">Your cart is empty.</td>
+                                        </tr>
+                                    {% endif %}
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td><strong>Subtotal:</strong></td>
+                                        <td id="subtotal">${{ total_price }}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
+                        </div>
+                        <div class="mt-4">
+                            <h5 class="font-size-14">Order Summary</h5>
+                            <div class="d-flex justify-content-between">
+                                <span>Shipping:</span>
+                                <span id="shipping">${{ shipping_cost }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Tax:</span>
+                                <span id="tax">${{ tax }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between font-weight-bold">
+                                <span>Total:</span>
+                                <span id="total">${{ total_cost }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -531,48 +680,9 @@
         </div>
     </div>
     
-  <script>
-    function addToCart(items) {
-    fetch('/add-to-cart/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')  
-        },
-        body: JSON.stringify({ items: items })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            // Handle success (e.g., update cart UI)
-            console.log('Items added to cart successfully.');
-        } else {
-            console.error('Error adding items to cart:', data);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-// Function to get the CSRF token from cookies
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Check if this cookie string begins with the name we want
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-  </script>  
+    
+    
+ 
 
 
 
