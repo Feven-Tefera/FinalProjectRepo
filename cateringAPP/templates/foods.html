@@ -110,7 +110,11 @@
     <section id="menu" class="menu section-bg">
       <br><br><br><br><br><br><br><br>
         <div class="container" data-aos="fade-up">
-  
+          {% if request.session.selected_package %}
+          <div class="alert alert-info">
+              <strong>Selected Package:</strong> {{ request.session.selected_package.package_name }} - ${{ request.session.selected_package.package_price }}
+          </div>
+      {% endif %}
           <div class="section-title">
             <h2>Menu</h2>
             <p>Check Our Tasty Menu</p>
@@ -177,7 +181,7 @@
         </div>
         
         <script>
-            // Add event listeners for the "Select All" checkboxes
+           
             document.querySelectorAll('.select-all').forEach(checkbox => {
                 checkbox.addEventListener('change', (event) => {
                     const categoryId = event.target.id.split('-')[2];
@@ -188,11 +192,11 @@
                 });
             });
         
-            // Form submission validation
+          
             document.getElementById('add-to-cart-form').addEventListener('submit', function(event) {
                 const checkboxes = document.querySelectorAll('input[name="menu_items"]:checked');
                 if (checkboxes.length === 0) {
-                    event.preventDefault(); // Prevent form submission
+                    event.preventDefault();
                     alert('Please select at least one menu item.');
                 }
             });

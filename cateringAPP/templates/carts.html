@@ -15,7 +15,17 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
         integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
       <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-   
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <style>
+          .table-custom {
+              background-color: #d4925b; /* Light gray */
+          }
+          .table-custom th {
+              background-color: #007bff; /* Bootstrap primary color */
+              color: white;
+          }
+      </style>
    <style type="text/css">
         body {
             margin-top: 20px;
@@ -486,9 +496,8 @@
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="font-size-16 mb-4">Your Cart</h5>
+                        <h5 class="font-size-16 mb-4">Customer Information</h5>
                         <div class="customer-info mb-4">
-                            <h6 class="font-weight-bold">Customer Information</h6>
                             <div class="info-item">
                                 <strong>First Name:</strong> <span>{{ customer.firstname }}</span>
                             </div>
@@ -508,159 +517,105 @@
                                 <strong>Phone Number:</strong> <span>{{ customer.phonenum }}</span>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
+                        <hr style="border: 1px solid brown; margin-top: 20px; margin-bottom: 20px;">
+
+    
+                        <!-- Package Details -->
+                        <div class="mb-4">
+                            <h5 class="font-size-16 mb-4">
+                                <i class="fas fa-box"></i> Package Details
+                            </h5>
+                            {% if selected_package %}
+                            <p><strong>Package Name:</strong> {{ selected_package.package_name }}</p>
+                            <p><strong>Package Price:</strong> ${{ selected_package.package_price|floatformat:2 }}</p>
+                        {% else %}
+                            <p>No package selected.</p>
+                        {% endif %}
+                        
+                        </div>
+                        
+
+
+                        <hr style="border: 1px solid brown; margin-top: 20px; margin-bottom: 20px;">
+
+                    
+                    
+                    
+                        <!-- Menu Item Details -->
+                        <div>
+                            <h5 class="font-size-16 mb-4">
+                                <i class="fas fa-utensils"></i> Menu Item Details
+                            </h5>
+                            <table class="table table-striped table-hover bg-light">
                                 <thead>
                                     <tr>
-                                        <th>Item Name</th>
+                                        <th>Menu Name</th>
                                         <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Total Price</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="cart-items">
+                                <tbody>
                                     {% if cart_items %}
                                         {% for item in cart_items %}
                                             <tr>
                                                 <td>
-                                                    {% if item.package %}
-                                                        {{ item.package.package_name }}
-                                                    {% elif item.menu_item %}
-                                                        {{ item.menu_item.item_name }}
+                                                    {% if item.menu_item %}
+                                                        {{ item.menu_item.item_name }}  <!-- Display menu item name -->
                                                     {% else %}
                                                         N/A
                                                     {% endif %}
                                                 </td>
                                                 <td>{{ item.quantity }}</td>
                                                 <td>
-                                                    {% if item.package %}
-                                                        ${{ item.package.package_price }}
-                                                    {% elif item.menu_item %}
-                                                        ${{ item.menu_item.price }}
+                                                    {% if item.id %}
+                                                        <a href="{% url 'Orders:remove_from_cart' item.id %}" class="btn btn-danger btn-sm">Remove</a>
                                                     {% else %}
-                                                        $0.00
+                                                        <span>N/A</span>
                                                     {% endif %}
-                                                </td>
-                                                <td>
-                                                    {% if item.package %}
-                                                        ${{ item.package.package_price|multiply:item.quantity }}
-                                                    {% elif item.menu_item %}
-                                                        ${{ item.menu_item.price|multiply:item.quantity }}
-                                                    {% else %}
-                                                        $0.00
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-danger btn-sm">Remove</a>
                                                 </td>
                                             </tr>
                                         {% endfor %}
                                     {% else %}
                                         <tr>
-                                            <td colspan="5" class="text-center">Your cart is empty.</td>
+                                            <td colspan="3" class="text-center">No menu items selected.</td>
                                         </tr>
                                     {% endif %}
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="3"></td>
-                                        <td><strong>Subtotal:</strong></td>
-                                        <td id="subtotal">${{ total_price }}</td>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
-                        <div class="mt-4">
-                            <h5 class="font-size-14">Order Summary</h5>
-                            <div class="d-flex justify-content-between">
-                                <span>Shipping:</span>
-                                <span id="shipping">${{ shipping_cost }}</span>
+    
+
+
+
+
+
+
+
+
+
+
+                        <div class="row my-4">
+                            <div class="col">
+                                <a href="{% url 'cateringAPP:food' %}" class="btn btn-link text-muted">
+                                    <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping
+                                </a>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Tax:</span>
-                                <span id="tax">${{ tax }}</span>
-                            </div>
-                            <div class="d-flex justify-content-between font-weight-bold">
-                                <span>Total:</span>
-                                <span id="total">${{ total_cost }}</span>
+                            <div class="col text-end">
+                                <a href="#" class="btn btn-success">
+                                    <i class="mdi mdi-cart-outline me-1"></i> Proceed to Checkout
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row my-4">
-                    <div class="col">
-                        <a href="{% url 'cateringAPP:food' %}" class="btn btn-link text-muted">
-                            <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping
-                        </a>
-                    </div>
-                    <div class="col text-end">
-                        <a href="#" class="btn btn-success">
-                            <i class="mdi mdi-cart-outline me-1"></i> Proceed to Checkout
-                        </a>
+                        
                     </div>
                 </div>
             </div>
+    
             <div class="col-xl-4">
                 <div class="card checkout-order-summary">
                     <div class="card-body">
                         <h5 class="font-size-16 mb-0">Order Summary</h5>
-                        <div class="table-responsive">
-                            <table class="table table-centered mb-0">
-                                <tbody id="cart-items">
-                                    {% if cart_items %}
-                                        {% for item in cart_items %}
-                                            <tr>
-                                                <td>
-                                                    {% if item.package %}
-                                                        {{ item.package.package_name }}
-                                                    {% elif item.menu_item %}
-                                                        {{ item.menu_item.item_name }}
-                                                    {% else %}
-                                                        N/A
-                                                    {% endif %}
-                                                </td>
-                                                <td>{{ item.quantity }}</td>
-                                                <td>
-                                                    {% if item.package %}
-                                                        ${{ item.package.package_price }}
-                                                    {% elif item.menu_item %}
-                                                        ${{ item.menu_item.price }}
-                                                    {% else %}
-                                                        $0.00
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    {% if item.package %}
-                                                        ${{ item.package.package_price|multiply:item.quantity }}
-                                                    {% elif item.menu_item %}
-                                                        ${{ item.menu_item.price|multiply:item.quantity }}
-                                                    {% else %}
-                                                        $0.00
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    <a href="#" class="btn btn-danger btn-sm">Remove</a>
-                                                </td>
-                                            </tr>
-                                        {% endfor %}
-                                    {% else %}
-                                        <tr>
-                                            <td colspan="5" class="text-center">Your cart is empty.</td>
-                                        </tr>
-                                    {% endif %}
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="4"></td>
-                                        <td><strong>Subtotal:</strong></td>
-                                        <td id="subtotal">${{ total_price }}</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="mt-4">
-                            <h5 class="font-size-14">Order Summary</h5>
+                        <div class="mt-3">
                             <div class="d-flex justify-content-between">
                                 <span>Shipping:</span>
                                 <span id="shipping">${{ shipping_cost }}</span>
@@ -672,6 +627,50 @@
                             <div class="d-flex justify-content-between font-weight-bold">
                                 <span>Total:</span>
                                 <span id="total">${{ total_cost }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="font-size-16 mb-4">Payment Method</h5>
+                        <div class="mb-3">
+                            <h5 class="font-size-14 mb-3">Select Payment Method:</h5>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label class="card-radio-label">
+                                            <input type="radio" name="pay-method" id="pay-methodoption1" class="card-radio-input">
+                                            <span class="card-radio py-3 text-center text-truncate">
+                                                <i class="bx bx-credit-card d-block h2 mb-3"></i>
+                                                Credit / Debit Card
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label class="card-radio-label">
+                                            <input type="radio" name="pay-method" id="pay-methodoption2" class="card-radio-input">
+                                            <span class="card-radio py-3 text-center text-truncate">
+                                                <i class="bx bxl-paypal d-block h2 mb-3"></i>
+                                                Paypal
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <label class="card-radio-label">
+                                            <input type="radio" name="pay-method" id="pay-methodoption3" class="card-radio-input" checked>
+                                            <span class="card-radio py-3 text-center text-truncate">
+                                                <i class="bx bx-money d-block h2 mb-3"></i>
+                                                Cash on Delivery
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -679,6 +678,8 @@
             </div>
         </div>
     </div>
+    
+    
     
     
     
@@ -795,7 +796,9 @@
 
 
 
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>

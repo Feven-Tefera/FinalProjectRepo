@@ -452,18 +452,18 @@
       >
         <div class="contact-info d-flex align-items-center">
           <i class="bi bi-phone d-flex align-items-center"
-            ><span>+1 5589 55488 55</span></i
+            ><span>+25196-65-68-65</span></i
           >
           <i class="bi bi-clock d-flex align-items-center ms-4"
-            ><span> Mon-Sat: 11AM - 23PM</span></i
+            ><span> Mon-Sun: 11AM - 23PM</span></i
           >
         </div>
 
         <div class="languages d-none d-md-flex align-items-center">
-          <ul>
+          <!-- <ul>
             <li>En</li>
             <li><a href="#">De</a></li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
@@ -482,32 +482,32 @@
         <nav id="navbar" class="navbar order-last order-lg-0">
           <ul>
             <li>
-              <a class="nav-link scrollto" href="{% url 'index_url' %}#hero"
+              <a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#hero"
                 >Home</a
               >
             </li>
             <li>
-              <a class="nav-link scrollto" href="{% url 'index_url' %}#about"
+              <a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#about"
                 >About</a
               >
             </li>
             <li>
-              <a class="nav-link scrollto" href="{% url 'index_url' %}#specials"
+              <a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#specials"
                 >Packages</a
               >
             </li>
             <li>
-              <a class="nav-link scrollto" href="{% url 'index_url' %}#events"
+              <a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#events"
                 >Events</a
               >
             </li>
             <li>
-              <a class="nav-link scrollto" href="{% url 'index_url' %}#gallery"
+              <a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#gallery"
                 >Gallery</a
               >
             </li>
             <li>
-              <a class="nav-link scrollto" href="{% url 'index_url' %}#contact"
+              <a class="nav-link scrollto" href="{% url 'cateringAPP:index_url' %}#contact"
                 >Contact</a
               >
             </li>
@@ -797,28 +797,81 @@
         <h2>Packages</h2>
         <p>Check Our latest Packages</p>
       </div>
-      <div class="row">
-        {% for packs in packageformitems %}
-        <div class="col-md-6 col-lg-3 mb-4">
-          <div class="card h-100" style="background-color: #ffffff">
-            <img
-              class="card-img-top"
-              src="{{packs.packimg}}"
-              alt="Card image cap"
-              height="200rem"
-              loading='lazy'
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{ packs.package_name }}</h5>
-              <p class="card-text">{{ packs.package_price }}</p>
-              <a href="{% url 'food' %}" class="btn btn-outline-primary"
-                >Explore</a
-              >
+
+      <form id="package-form" method="POST" action="{% url 'Orders:select_package' %}">
+        {% csrf_token %}
+        <div class="row">
+            {% for packs in packageformitems %}
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card h-100 package-card" data-package-id="{{ packs.id }}" style="background-color: #ffffff; cursor: pointer;">
+                    <img
+                        class="card-img-top"
+                        src="{{ packs.packimg }}"
+                        alt="Card image cap"
+                        height="200rem"
+                        loading='lazy'
+                    />
+                    <div class="card-body">
+                        <h5 class="card-title">{{ packs.package_name }}</h5>
+                        <p class="card-text">${{ packs.package_price }}</p>
+                        <a href="{% url 'cateringAPP:food' %}" class="btn btn-outline-primary more-button">More...</a>
+                    </div>
+                </div>
             </div>
-          </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-      </div>
+        
+        <input type="hidden" name="package_id" id="selected-package-id" value="">
+    </form>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const packageCards = document.querySelectorAll('.package-card');
+    
+            packageCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    packageCards.forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+    
+                    const selectedPackageId = this.getAttribute('data-package-id');
+                    document.getElementById('selected-package-id').value = selectedPackageId;  
+                    console.log('Selected Package ID:', selectedPackageId);
+                    document.getElementById('package-form').submit();
+                });
+            });
+        });
+    </script>
+    
+    
+    <style>
+        .package-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+    
+        .package-card.selected {
+            border: 2px solid #ac5a18e7; /* Change border color to indicate selection */
+            box-shadow: 0 20px 20px #ac5a18e7; /* 3D shadow effect */
+            transform: translateY(-5px); /* Slight lift effect */
+        }
+    
+        .more-button {
+        margin-top: 10px;
+        background-color: #ac5a18e7; /* Brown background color */
+        color: white; /* Text color */
+        border: none; /* Remove default border */
+        border-radius: 20px; /* Oval shape */
+        padding: 10px 20px; /* Padding for better size */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for button */
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .more-button:hover {
+        background-color: #8b4e2e; /* Darker brown on hover */
+        transform: translateY(-2px); /* Lift effect on hover */
+    }
+    </style>
+    
+    
     </div>
   </section>
 
