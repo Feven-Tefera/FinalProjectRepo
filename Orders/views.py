@@ -18,14 +18,19 @@ def cart_view(request):
         (item.package.package_price * item.quantity) if item.package else Decimal('0.00')
         for item in cart_items
     )
-
+    
     shipping_cost = Decimal('5000.00')
     tax = total_price * Decimal('0.15')
     total_cost = total_price + shipping_cost + tax
 
-   
     selected_package = request.session.get('selected_package')
     logger.debug("Selected package retrieved from session: %s", selected_package)
+
+    # Calculate the total including the package price if selected
+    if selected_package:
+        package_price = Decimal(selected_package['package_price'])
+        total_cost += package_price  # Add package price to the total cost
+        total_price += package_price   # Add package price to the total price
 
     context = {
         'cart_items': cart_items,
@@ -38,6 +43,7 @@ def cart_view(request):
     }
 
     return render(request, 'carts.html', context)
+
 
 
 
@@ -63,8 +69,8 @@ def select_package(request):
 
 
 
-
 logger = logging.getLogger(__name__)
+
 @login_required
 def add_to_cart(request):
     if request.method == 'POST':
@@ -76,10 +82,10 @@ def add_to_cart(request):
         selected_menu_items = request.POST.getlist('menu_items')
         logger.debug("Selected menu items: %s", selected_menu_items)
 
-       
+        # Add selected menu items to cart
         for menu_item_id in selected_menu_items:
-            if menu_item_id:  
-                menu_item = get_object_or_404(MenuItem, item_id=menu_item_id)  
+            if menu_item_id:
+                menu_item = get_object_or_404(MenuItem, item_id=menu_item_id)
                 cart_item, created = CartItem.objects.get_or_create(
                     user_account=customer,
                     menu_item=menu_item,
@@ -89,7 +95,7 @@ def add_to_cart(request):
                     cart_item.quantity += 1
                     cart_item.save()
 
-     
+        # Handle selected package
         selected_package = request.session.get('selected_package')
         if selected_package:
             package = get_object_or_404(Package, id=selected_package['package_id'])
@@ -102,8 +108,8 @@ def add_to_cart(request):
                 cart_item.quantity += 1
                 cart_item.save()
 
-           
-            del request.session['selected_package']
+            # Clear the session variable for the selected package
+            # del request.session['selected_package']
 
         return redirect('Orders:cart_view')
 
